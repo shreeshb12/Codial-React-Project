@@ -32,3 +32,13 @@ body {
     -webkit-transform: rotate(360deg);
   }
 }
+
+/* heart */
+.fa-heart:hover{
+  color: red;
+  cursor: pointer;
+}
+
+.liked{
+  color: red;
+}

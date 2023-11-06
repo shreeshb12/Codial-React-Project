@@ -2,12 +2,15 @@ import styles from '../styles/home.module.css';
 import { Link } from "react-router-dom";
 import {Comment} from './'
 import { useEffect, useState } from 'react';
-import { addComment } from '../api';
-import { usePosts } from '../hooks';
+import { addComment, updateLike } from '../api';
+import { usePosts,useAuth } from '../hooks';
+import { toast } from 'react-toastify';
 const Post=(props)=>{
     const useposts=usePosts();
+    const auth=useAuth();
     const {post}=props
     const [comments,setComments]=useState('');
+    console.log(post.likes.includes(auth.user._id));
     useEffect(()=>{
         
     },[])
@@ -19,7 +22,23 @@ const Post=(props)=>{
             console.log(resp);
             useposts.updateComments(post._id,resp.data.comment);
         }
+        else
+        {
+            toast.error('can not add empty comment');
+        }
         setComments('');
+    }
+    const handleLike=async(e)=>{
+        const resp=await updateLike(post._id,'Post');
+        if(resp.data.deleted)
+        {
+            toast.error('disliked!!')
+            e.target.classList.remove('liked');
+        }
+        else{
+            toast.success('liked!!')
+            e.target.classList.add('liked');
+        }
     }
     return(
         <div className={styles.postWrapper} key={post._id}>
@@ -39,11 +58,8 @@ const Post=(props)=>{
             <div className={styles.postContent}>{post.content}</div>
 
             <div className={styles.postActions}>
-                <div className={styles.postLike}>
-                <img
-                    src={`${require('../images/heart.png')}`}
-                    alt="likes-icon"
-                />
+                <div className={styles.postLike} >
+                <i className="fa-regular fa-heart" onClick={handleLike}></i>
                 <span>{post.likes.length}</span>
                 </div>
 

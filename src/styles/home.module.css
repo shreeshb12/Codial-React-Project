@@ -57,11 +57,12 @@
     border-right: none;
     border-left: none;
   }
-  .postActions img {
+  .postActions img,.postActions i {
     height: 18px;
   }
   .postActions img:hover {
     cursor: pointer;
+    transform: scale(1.1);
   }
   .postLike {
     display: flex;

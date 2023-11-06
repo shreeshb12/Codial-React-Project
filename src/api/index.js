@@ -118,3 +118,15 @@ export const addComment=(post_id,content)=>{
         }
     })
 }
+
+export const updateLike=(id,type)=>{
+    return customFetch(API_URLS.toggleLike(id,type),{
+        method:'POST'
+    })
+}
+
+export const searchUsers=(text)=>{
+    return customFetch(API_URLS.searchUsers(text),{
+        method:'GET'
+    })
+}
